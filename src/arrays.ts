@@ -85,19 +85,13 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    let isRGB: boolean = true;
-    const checkRGB = colors.map((colors: string): string => {
-        if (
-            colors.toLowerCase() === "red" ||
-            colors.toLowerCase() === "blue" ||
-            colors.toLowerCase() === "green"
-        ) {
-            isRGB = isRGB;
-        } else {
-            isRGB = false;
-        }
-    });
-    return isRGB;
+    const checkRGB = colors.every(
+        (color: string): boolean =>
+            color.toLowerCase() == "red" ||
+            color.toLowerCase() == "green" ||
+            color.toLowerCase() == "blue",
+    );
+    return checkRGB;
 }
 
 /**
@@ -108,18 +102,16 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    if (addends.length === 0) {
-        return "0=0";
-    }
     let sum: number = 0;
-    const calcSum = addends.map((numbers: number): number => {
-        sum += numbers;
+    addends.map((num: number) => {
+        sum += num;
     });
     let sumString: string = sum + "=";
-    const makeSumString = addends.map((numbers: number): number => {
-        sumString += numbers + "+";
-    });
-    sumString = sumString.slice(0, -1);
+    if (addends.length > 0) {
+        sumString += addends.join("+");
+    } else {
+        sumString += 0;
+    }
     return sumString;
 }
 
@@ -133,10 +125,10 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    let taking: bool = true;
+    let taking: boolean = true;
     let sum: number = 0;
     let index: number = 0;
-    const injectPos = values.map((numbers: number): number => {
+    values.map((numbers: number) => {
         if (numbers > 0 && taking) {
             sum += numbers;
             index++;
